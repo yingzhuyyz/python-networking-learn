@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 
 import socket, sys
-from datetime import datetime
 
 MAX_BYTES = 65535
 
-def server(host, port):
+def server(interface, port):
     sSock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    sSock.bind((host, port))
+    sSock.bind((interface, port))
     print('Listening at {}'.format(sSock.getsockname()))
     while True:
         msg, address = sSock.recvfrom(MAX_BYTES)
