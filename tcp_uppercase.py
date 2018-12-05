@@ -4,7 +4,7 @@
 from socket import *
 import sys
 
-def server(interface, port):
+def server(interface, port, numBytes):
     sock = socket(AF_INET, SOCK_STREAM)
     sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
     sock.bind((interface, port))
@@ -36,8 +36,8 @@ def client(host, port, numBytes):
     sent = 0
     while sent < numBytes:
         sock.sendall(data)
-        bytesSent += len(data)
-        print('  {} bytes sent'.format(bytesSent))
+        sent += len(data)
+        print('  {} bytes sent'.format(sent))
         sys.stdout.flush()
     print()
     sock.shutdown(SHUT_WR)
@@ -56,4 +56,10 @@ def client(host, port, numBytes):
     sock.close()
 
 if __name__ == '__main__':
-
+    functions = {'client': client, 'server': server}
+    role = sys.argv[1]
+    host = sys.argv[2]
+    port = int(sys.argv[3])
+    n = int(sys.argv[4])    # number of bytes
+    function = functions[role]
+    function(host, port, n)
