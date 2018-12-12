@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # TCP server receives chunks of data from client, each chunk is prefixed with the length of the data in that chunk.
+# Client reads string from command-line, converts to a byte string (Python bytes object) and sends it to server.
 
 from socket import *
 import sys, struct
@@ -50,10 +51,11 @@ def client(host, port):
     cs = socket(AF_INET, SOCK_STREAM)
     cs.connect((host, port))
     cs.shutdown(SHUT_RD)
-    send_chunk(cs, b'Never let truth get in the way of a good story.')
-    send_chunk(cs, b'Eighty percent of success is showing up.')
-    send_chunk(cs, b'Pursue what is meaningful, not what is expedient.')
-    send_chunk(cs, b'')
+    while True:
+        sentence = input("Enter a saying: ")
+        send_chunk(cs, bytes(sentence, 'utf-8'))
+        if len(sentence) == 0:
+            break
     cs.close()
 
 if __name__ == '__main__':
