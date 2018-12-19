@@ -11,8 +11,8 @@ example_questions = [b'Will I be happy tomorrow?',
                      b'Is there true free will?']
 
 def make_reply(question):
-    time.sleep(0.0) # tune sleep time to simulate processing time
-    reply = question + b'  ' + replies[random.randint(0, 4)]
+    time.sleep(0.0)     # tune sleep time to simulate processing time
+    reply = question + b'  ' + replies[random.randint(-1, 4)]
     return reply
 
 def get_address():
